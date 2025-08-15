@@ -3,12 +3,32 @@ import { useState } from "react";
 import ImageUploader from "./components/ImageUploader";
 import ResultBox from "./components/ResultBox";
 
+/**
+ * Main component for an OCR and text extraction tool with live camera functionality.
+ *
+ * This component manages state for OCR text, bounding boxes, image URL, and target language.
+ * It includes handlers for image cropping, OCR processing, and starting a live camera feed for translation.
+ * The UI consists of a header, uploader, image display with text boxes, extracted text result,
+ * and a section to start the live camera with language selection.
+ *
+ * @returns JSX element representing the main application interface.
+ */
 const App = () => {
   const [ocrText, setOcrText] = useState("");
   const [boxes, setBoxes] = useState([]);
   const [imageUrl, setImageUrl] = useState(null);
   const [targetLang, setTargetLang] = useState("en"); // Default target language
 
+  /**
+   * Handles the cropped image processing and OCR functionality.
+   *
+   * This function takes a blob, constructs a FormData object with it,
+   * sends it to an OCR endpoint, and processes the response to update
+   * the state with boxes data, OCR text, and image URL. It handles errors
+   * by alerting the user in case of failure.
+   *
+   * @param {Blob} blob - The cropped image as a Blob object.
+   */
   const handleCropped = async (blob) => {
     if (!blob) return;
 
@@ -35,6 +55,9 @@ const App = () => {
     }
   };
 
+  /**
+   * Starts the live camera and displays an alert on success or failure.
+   */
   const startLiveCamera = async () => {
     try {
       await fetch(`http://localhost:8000/start-camera?lang=${targetLang}`);
