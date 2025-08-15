@@ -1,11 +1,27 @@
 import { useEffect, useState } from "react";
 
+/**
+ * Renders a translation box component that translates input text to selected language.
+ *
+ * This component uses React hooks such as useState and useEffect to manage state and side effects.
+ * It fetches translation data from a remote API and displays the translated text or an error message if the translation fails.
+ * The user can select a target language for translation from a dropdown menu.
+ */
 const ResultBox = ({ text }) => {
   const [translatedText, setTranslatedText] = useState("");
   const [targetLang, setTargetLang] = useState("ta"); // default Tamil
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
+    /**
+     * Asynchronously translates the provided text to a target language.
+     *
+     * This function checks if the input text is empty or contains only whitespace.
+     * If it does, it clears any previously translated text and exits.
+     * Otherwise, it sets a loading state, sends a POST request to the translation API,
+     * processes the response, updates the translated text, handles errors, and finally
+     * resets the loading state regardless of the outcome.
+     */
     const translateText = async () => {
       if (!text.trim()) {
         setTranslatedText("");
