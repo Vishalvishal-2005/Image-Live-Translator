@@ -13,7 +13,7 @@ const ResultBox = ({ text }) => {
       }
       setLoading(true);
       try {
-        const res = await fetch("http://localhost:8000/translate/", {
+        const res = await fetch("https://translator-backend-r9zp.onrender.com/translate/", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({ text, target_lang: targetLang }),
