@@ -1,11 +1,28 @@
 import { useEffect, useState } from "react";
 
+/**
+ * ResultBox component for displaying recognized text and its translation.
+ *
+ * This component renders a card containing the original OCR output text,
+ * a dropdown to select the target language for translation, and the translated text.
+ * It fetches the translated text from an external API when the original text or
+ * target language changes. The component manages loading states and handles errors
+ * gracefully by displaying an error message if the translation fails.
+ */
 const ResultBox = ({ text }) => {
   const [translatedText, setTranslatedText] = useState("");
   const [targetLang, setTargetLang] = useState("ta"); // default Tamil
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
+    /**
+     * Asynchronously translates text using a translation service and updates the UI with the result.
+     *
+     * This function checks if the input text is empty or contains only whitespace. If so, it clears any previously translated text.
+     * Otherwise, it sets a loading state to true, sends a POST request to a translation API with the input text and target language,
+     * processes the response to update the translated text, handles errors by setting an error message, and finally resets the
+     * loading state.
+     */
     const translateText = async () => {
       if (!text.trim()) {
         setTranslatedText("");
