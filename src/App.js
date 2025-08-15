@@ -16,7 +16,7 @@ const App = () => {
     formData.append("file", blob);
 
     try {
-      const res = await fetch("http://localhost:8000/ocr/", {
+      const res = await fetch("https://translator-backend-r9zp.onrender.com/ocr/", {
         method: "POST",
         body: formData,
       });
@@ -37,7 +37,7 @@ const App = () => {
 
   const startLiveCamera = async () => {
     try {
-      await fetch(`http://localhost:8000/start-camera?lang=${targetLang}`);
+      await fetch(`https://translator-backend-r9zp.onrender.com/start-camera?lang=${targetLang}`);
       alert("Live camera started — check the Python window. Press 'q' to stop.");
     } catch (error) {
       alert("Error starting camera: " + error.message);
