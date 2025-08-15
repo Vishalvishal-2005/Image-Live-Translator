@@ -2,12 +2,24 @@ import { useCallback, useState } from "react";
 import ReactCrop, { centerCrop, makeAspectCrop } from "react-image-crop";
 import "react-image-crop/dist/ReactCrop.css";
 
+/**
+ * ImageUploader component that allows users to upload an image, crop it, and then perform OCR on the cropped image.
+ *
+ * It manages state for the uploaded image source, crop coordinates, and the reference to the image element.
+ * The component handles file selection, image loading, and cropping logic. After cropping, it can trigger
+ * an OCR operation if `onCropped` is provided.
+ *
+ * @param {Function} onCropped - Callback function called with the cropped image blob when the crop button is clicked.
+ */
 const ImageUploader = ({ onCropped }) => {
   const [src, setSrc] = useState(null);
   const [crop, setCrop] = useState();
   const [imageRef, setImageRef] = useState(null);
 
   // Default crop helper
+  /**
+   * Centers and crops a media to fit a given aspect ratio.
+   */
   function centerAspectCrop(mediaWidth, mediaHeight, aspect) {
     return centerCrop(
       makeAspectCrop(
@@ -24,6 +36,9 @@ const ImageUploader = ({ onCropped }) => {
     );
   }
 
+  /**
+   * Handles file selection and sets the src with the file's data URL.
+   */
   const onSelectFile = (e) => {
     if (e.target.files && e.target.files.length > 0) {
       const reader = new FileReader();
@@ -32,6 +47,9 @@ const ImageUploader = ({ onCropped }) => {
     }
   };
 
+  /**
+   * Handles image load event to set initial crop and image reference.
+   */
   const onImageLoad = (e) => {
     const { width, height } = e.currentTarget;
     setCrop(centerAspectCrop(width, height, 1)); // square crop
